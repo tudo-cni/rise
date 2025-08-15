@@ -4,11 +4,11 @@ This code is published in conjunction with the research paper titled "*RISE: Mul
 RISE enables  channel-adaptive real-time video encoding in single- or multi-link configurations.
 
 ## Table of Contents
-- [RISE Demonstration Video](#RISE Demonstration Video)
+- [RISE Demonstration Video](#RISE-Demonstration-Video)
 - [Architecture Overview](#Architecture-Overview)
 - [Installation and Setup](#Installation-and-Setup)
 - [Running the System](#Running-the-System)
-- [Kernel Patch](#Applying a Kernel Patch)
+- [Kernel Patch](#Applying-a-Kernel-Patch)
 - [SEAMLESS Setup](#Setup-SEAMLESS-Multi-Link)
 - [Make Videos Loopable](#make-videos-loopable)
 - [Bibtex](#Bibtex)
