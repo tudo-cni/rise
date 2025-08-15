@@ -1,0 +1,22 @@
+method: mcs
+socket_in_port: 2345
+
+application_overhead: 0.15 # Accomodate for Seamless, IP, UDP and RTP Overheads
+is_downlink: False
+send_combined_func: "numpy.max"
+single_mode: -1 # index of the modem, which shall be used for combined datarate instead of maximum of all cells or -1 for max
+cells:
+  - measurement_modem_tag: "modem1"
+    cell_bandwidth: 20 #MHz, initial value, overwritten by measured value
+    mu_subcarrier_spacing: 1 #0,1 --> 15, 30, ...kHz Subcarrier spacing. Initial value, overwritten by measured value
+    downlink_percentage: 0.3 # 2 DL Slots, 7 Uplink Slots
+    own_utilization_factor: 1.0
+    correction_factor: 0.3
+    max_mcs: 27
+  - measurement_modem_tag: "modem2"
+    cell_bandwidth: 20 #MHz, initial value, overwritten by measured value
+    mu_subcarrier_spacing: 1 #0,1 --> 15, 30, ...kHz Subcarrier spacing. Initial value, overwritten by measured value
+    downlink_percentage: 0.3 # 2 DL Slots, 7 Uplink Slots
+    own_utilization_factor: 1.0
+    correction_factor: 0.3
+    max_mcs: 27

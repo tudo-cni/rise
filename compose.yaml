@@ -1,0 +1,46 @@
+services:
+  monitor:
+    container_name: monitor
+    build: ./monitor_docker
+    command: python3 monitor.py
+    network_mode: host
+    privileged: true
+    volumes:
+      - /dev:/dev
+      - ./monitor_docker:/monitor_docker
+
+  cal_bitrate:
+    container_name: calc_b
+    build: calc_bitrate
+    stdin_open: true
+    tty: true
+    command: python3 dr_stream_control.py
+    network_mode: host
+    depends_on:
+      monitor:
+        condition: service_started
+    volumes:
+      - ./calc_bitrate:/home
+
+  videostream:
+    restart: unless-stopped
+    container_name: avs
+    build: encoder/
+    command: ["python3", "/home/gstreamer_zmq.py"]
+    privileged: true
+    stop_signal: SIGINT
+    network_mode: host
+    volumes:
+    - ./video:/video
+    - ./encoder:/home
+    - /dev/dri:/dev/dri
+  player:
+    container_name: player
+    build: player
+    stdin_open: true
+    tty: true
+    network_mode: host
+    command: python3 gstreamer_player.py
+    environment:
+      - DISPLAY=$DISPLAY
+

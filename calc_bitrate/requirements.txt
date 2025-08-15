@@ -1,0 +1,5 @@
+pandas
+numpy
+dataclass_wizard
+pyzmq
+pyyaml

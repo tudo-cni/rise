@@ -1,0 +1,21 @@
+*.pyc
+*.backup
+*.lock
+
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+.Python
+env/
+
+# pyenv
+.python-version
+# dotenv
+.env
+
+# virtualenv
+venv/
+ENV/
+.venv

@@ -1,0 +1,13 @@
+use_file_src: false
+loop_file: false
+file: "/video/timeless_stream_fhd_36M.mp4" #stream_encoded_fhd_36M.mp4" #original_encoded.mp4"#my_timeless_file.mp4"
+#source_element: "videotestsrc pattern=snow is-live=true"
+
+encoder_settings: "speed-preset=ultrafast tune=zerolatency key-int-max=6 bframes=0 rc-lookahead=0 sliced-threads=true sync-lookahead=0 intra-refresh=true mb-tree=false vbv-buf-capacity=100"
+
+transport_method: udp
+stream_target:  127.0.0.1 #192.168.1.1
+initial_bitrate_kbps: 24000
+max_bitrate: 24000
+buffer_feedback: True
+const_bitrate: False

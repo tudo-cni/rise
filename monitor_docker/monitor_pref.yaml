@@ -1,0 +1,2 @@
+at_ports: ["/dev/ttyUSB3","/dev/ttyUSB6"]
+zmq_port: 2345

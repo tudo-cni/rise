@@ -1,0 +1,67 @@
+wrapper:
+  type: Tun
+  user:
+    type: Regular
+    uid: 1000 # Required: Switch to user after setup is done
+    gid: 1000 # Required: Switch to group after setup is done
+  name: tun0 # Required: Advertised interface name
+  local_ip: 192.168.1.2 # Required: Local tun interface IP address
+  remote_ip: 192.168.1.1 # Required: Remote address for which routing tables are created
+  netmask: 255.255.255.255 # Required: Netmask for remote devices
+  mtu: 1400 # Optional: MTU of tun interface. Option to avoid packet segmentation
+
+seamless:
+  hostname: myhostname
+  # Options: LowestRtt, Redundant, SingleLink, RoundRobin
+  global_scheduler:
+    type: BestQuality
+    time_to_trigger: 700ms # Optional: Time to trigger link switch, Default: 200ms
+    links:
+      - link_name: nr1
+        kpi: bitrate
+      - link_name: nr2
+        kpi: bitrate
+
+  external_measurement:
+    zmq_port: 5555 # Required: Zmq Port to connect to combox
+    measurements: # Required: List of measurements that should be subscribed to
+      nr1: # Required: Name of of measurement. Is matched with link combox_measurement field
+        topic: nr # Required: zmq topic. See combox 
+        sub_topic: modem1 # Required: zmq subtopic topic. See combox
+        links:
+          - nr1
+        technology: nr # Required: Technology type needed to match kpi. Possible values: nr, wifi, lte
+        fields: # Required: fields that can be matched to technologies
+          - bitrate # Required: Options for nr: ss-rsrp, ss-sinr, ss-rsrq
+      nr2: # see above
+        topic: nr # see above
+        sub_topic: modem2 # Required: zmq subtopic topic. See combox
+        links:
+          - nr2
+        technology: nr # Required: Technology type needed to match kpi. Possible values: nr, wifi, lte. Case-insensitive
+        fields: # see above
+          - bitrate # see above
+  monitoring_interval: 87ms # Optional: Time interval in which link loss and health state is calculated, Default: 200ms
+  initial_reorder_timeout: 50ms # Optional: Initial reorder timeout for incoming packets. Updated dynamically by rtt, Default: 100ms
+  reorder_buffer_size: 8 # Optional: reorder buffer size (packets) for incoming packets.  Default: 128
+  links:
+    nr2: # Required: Name of link. Used for scheduling and reporting
+      local_ip: 172.27.2.2  # Required: Local IP address of link
+      local_port: 6000 # Required: Local UDP port of link
+      remote_ip: 192.168.178.1 # Required: Remote IP address of link
+      remote_port: 6001 # Required: Local UDP port of link
+      rtt_tolerance: 2s
+      technology: nr # Optional: Technology type needed to match kpi. Possible values: nr, wifi, lte, general. Default: Generic, Case-insensitive
+      udp_buffer_size: 12500
+      state_udp_buffer_full: false
+      keepalive_interval: 8ms
+    nr1: # see links
+      local_ip: 172.27.99.34 # Required: Local IP address of link
+      local_port: 6000 # Required: Local UDP port of link
+      remote_ip: 192.168.179.1 # Required: Remote IP address of link
+      remote_port: 6001 # Required: Local UDP port of link
+      rtt_tolerance: 2s
+      keepalive_interval: 8ms
+      technology: nr # Optional: Technology type needed to match kpi. Possible values: nr, wifi, lte, general. Default: Generic, Case-insensitive
+      udp_buffer_size: 12500
+      state_udp_buffer_full: false

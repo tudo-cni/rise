@@ -1,0 +1,44 @@
+wrapper:
+  type: Tun
+  user:
+    type: Regular
+    uid: 1000 # Required: Switch to user after setup is done
+    gid: 1000 # Required: Switch to group after setup is done
+  name: tun0 # Required: Advertised interface name
+  local_ip: 192.168.1.1 # Required: Local tun interface IP address
+  remote_ip: 192.168.1.2 # Required: Remote address for which routing tables are created
+  netmask: 255.255.255.255 # Required: Netmask for remote devices
+  mtu: 1400 # Optional: MTU of tun interface. Option to avoid packet segmentation
+
+seamless:
+  hostname: myhostnameserver
+  # Options: LowestRtt, Redundant, SingleLink, RoundRobin...
+  global_scheduler:
+    type: LowestRtt
+    time_to_trigger: 700ms # Optional: Time to trigger link switch, Default: 200ms
+    links:
+      - nr1
+      - nr2
+  
+  reorder_buffer_size: 8 # Optional: reorder buffer size (packets) for incoming packets.  Default: 128
+  links:
+    nr2: # Required: Name of link. Used for scheduling and reporting
+      local_ip: 192.168.178.1  # Required: Local IP address of link
+      local_port: 6001 # Required: Local UDP port of link
+      remote_ip:  172.27.2.2 # Required: Remote IP address of link
+      remote_port: 6000 # Required: Local UDP port of link
+      rtt_tolerance: 2s
+      technology: nr # Optional: Technology type needed to match kpi. Possible values: nr, wifi, lte, general. Default: Generic, Case-insensitive
+      udp_buffer_size: 12500
+      state_udp_buffer_full: false
+      keepalive_interval: 8ms
+    nr1: # see links
+      local_ip:  192.168.179.1 # Required: Local IP address of link
+      local_port: 6001 # Required: Local UDP port of link
+      remote_ip: 172.27.99.34 # Required: Remote IP address of link
+      remote_port: 6000 # Required: Local UDP port of link
+      rtt_tolerance: 2s
+      keepalive_interval: 8ms
+      technology: nr # Optional: Technology type needed to match kpi. Possible values: nr, wifi, lte, general. Default: Generic, Case-insensitive
+      udp_buffer_size: 12500
+      state_udp_buffer_full: false
